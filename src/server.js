@@ -1,13 +1,26 @@
-import express from "express";
+import 'dotenv/config'
+import express from 'express'
+import { mapOrder } from '~/utils/sorts.js'
 
-const app = express();
+const app = express()
 
-const hostName = process.env.HOST || "localhost";
-const port = process.env.PORT || 8080;
+const hostname = process.env.HOST_NAME
+const port = process.env.PORT
 
-app.get("/", (req, res) => {
-  res.send("Hello World");
-});
-app.listen(port, hostName, () => {
-  console.log(`Server is running at http://${hostName}:${port}`);
-});
+app.get('/', (req, res) => {
+  // Test Absolute import mapOrder
+  console.log(mapOrder(
+    [{ id: 'id-1', name: 'One' },
+      { id: 'id-2', name: 'Two' },
+      { id: 'id-3', name: 'Three' },
+      { id: 'id-4', name: 'Four' },
+      { id: 'id-5', name: 'Five' }],
+    ['id-5', 'id-4', 'id-2', 'id-3', 'id-1'],
+    'id'
+  ))
+  res.end('<h1>Hello World!</h1><hr>')
+})
+
+app.listen(port, hostname, () => {
+  console.log(`Hello Quang Huy, I am running at http://${ hostname }:${ port }/`)
+})
